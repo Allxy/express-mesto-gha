@@ -4,7 +4,7 @@ import NotFoundError from '../utils/errors/NotFoundError.js';
 async function createUser(request, response, next) {
   try {
     const user = await UserRepository.create(request.body);
-    response.send(user);
+    response.status(201).send(user);
   } catch (error) {
     next(error);
   }
@@ -28,6 +28,8 @@ async function getUser(request, response, next) {
       response.send(user);
     }
   } catch (error) {
+    console.log(error);
+
     next(error);
   }
 }

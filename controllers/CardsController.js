@@ -4,7 +4,7 @@ import NotFoundError from '../utils/errors/NotFoundError.js';
 async function createCard(request, response, next) {
   try {
     const card = await CardsRepository.create({ ...request.body, owner: request.user._id });
-    response.send(card);
+    response.status(201).send(card);
   } catch (error) {
     next(error);
   }

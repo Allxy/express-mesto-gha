@@ -19,14 +19,20 @@ export default class Repository {
     if (isValidObjectId(filter)) {
       return this.#model.findById(filter).exec();
     }
-    return this.#model.findOne(filter).exec();
+    if (typeof filter === 'object') {
+      return this.#model.findOne(filter).exec();
+    }
+    return null;
   }
 
   deleteOne(filter) {
     if (isValidObjectId(filter)) {
       return this.#model.findByIdAndDelete(filter).exec();
     }
-    return this.#model.deleteOne(filter).exec();
+    if (typeof filter === 'object') {
+      return this.#model.deleteOne(filter).exec();
+    }
+    return null;
   }
 
   updateOne(filter, data) {
@@ -36,9 +42,12 @@ export default class Repository {
         runValidators: true,
       }).exec();
     }
-    return this.#model.updateOne(filter, data, {
-      new: true,
-      runValidators: true,
-    }).exec();
+    if (typeof filter === 'object') {
+      return this.#model.updateOne(filter, data, {
+        new: true,
+        runValidators: true,
+      }).exec();
+    }
+    return null;
   }
 }
