@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Проект Mesto бэкенд",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "node ."
+    "start": "node --experimental-modules --es-module-specifier-resolution=node ."
   },
   "repository": {
     "type": "git",
