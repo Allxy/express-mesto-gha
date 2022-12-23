@@ -1,4 +1,6 @@
+import { isValidObjectId } from 'mongoose';
 import CardsRepository from '../repositories/CardsRepository.js';
+import BadRequestError from '../utils/errors/BadRequestError.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createCard(request, response, next) {
@@ -21,6 +23,10 @@ async function getAllCards(request, response, next) {
 
 async function deleteCard(request, response, next) {
   try {
+    const caedId = request.params.id;
+    if (!isValidObjectId(caedId)) {
+      throw new BadRequestError('Card id is not valid');
+    }
     const card = await CardsRepository.deleteOne(request.params.id);
     if (card === null) {
       throw new NotFoundError('Card not found');
@@ -33,6 +39,10 @@ async function deleteCard(request, response, next) {
 
 async function likeCard(request, response, next) {
   try {
+    const caedId = request.params.id;
+    if (!isValidObjectId(caedId)) {
+      throw new BadRequestError('Card id is not valid');
+    }
     const card = await CardsRepository.updateOne(request.params.id, {
       $addToSet: { likes: request.user._id },
     });
@@ -47,6 +57,10 @@ async function likeCard(request, response, next) {
 
 async function dislikeCard(request, response, next) {
   try {
+    const caedId = request.params.id;
+    if (!isValidObjectId(caedId)) {
+      throw new BadRequestError('Card id is not valid');
+    }
     const card = await CardsRepository.updateOne(request.params.id, {
       $pull: { likes: request.user._id },
     });
