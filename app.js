@@ -24,6 +24,9 @@ async function start() {
     });
     app.use('/users', usersRouter);
     app.use('/cards', cardsRouter);
+    app.use('*', (request, response) => {
+      response.status(404).send({ message: "Endpoint doesn't exist" });
+    });
     app.use(httpErrorHandler);
     app.use(mongoErorHandler);
     app.use(defaultErrorHandler);

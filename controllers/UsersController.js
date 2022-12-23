@@ -28,8 +28,6 @@ async function getUser(request, response, next) {
       response.send(user);
     }
   } catch (error) {
-    console.log(error);
-
     next(error);
   }
 }
