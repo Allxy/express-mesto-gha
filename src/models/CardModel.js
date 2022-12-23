@@ -20,10 +20,6 @@ const cardSchema = new Schema({
     type: [Types.ObjectId],
     default: [],
   },
-  __v: {
-    type: Number,
-    select: false,
-  },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 export default model('card', cardSchema);

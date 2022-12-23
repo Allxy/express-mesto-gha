@@ -1,9 +1,10 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
-import defaultErrorHandler from './middlewares/defaultErrorHandler.js';
-import httpErrorHandler from './middlewares/httpErrorHandler.js';
-import mongoErorHandler from './middlewares/mongoErrorHandler.js';
-import UsersRouter from './routes/UsersRouter.js';
+import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
+import httpErrorHandler from './middlewares/HttpErrorHandler.js';
+import mongoErorHandler from './middlewares/MongoErrorHandler.js';
+import usersRouter from './routes/UsersRouter.js';
+import cardsRouter from './routes/CardsRouter.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -15,7 +16,8 @@ async function start() {
 
     const app = express();
     app.use(json());
-    app.use('/users', UsersRouter);
+    app.use('/users', usersRouter);
+    app.use('/cards', cardsRouter);
     app.use(httpErrorHandler);
     app.use(mongoErorHandler);
     app.use(defaultErrorHandler);

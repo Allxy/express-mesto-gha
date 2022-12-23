@@ -1,24 +1,10 @@
 import UserModel from '../models/UserModel.js';
+import Repository from './Repository.js';
 
-function createUser(data) {
-  return UserModel.create(data);
+class UserRepository extends Repository {
+  constructor() {
+    super(UserModel);
+  }
 }
 
-function getUsers(query = {}) {
-  return UserModel.find(query, {}).exec();
-}
-
-function getUserOne(query) {
-  return UserModel.findOne(query).exec();
-}
-
-function getUserById(id) {
-  return UserModel.findById(id).exec();
-}
-
-export default {
-  createUser,
-  getUsers,
-  getUserOne,
-  getUserById,
-};
+export default new UserRepository();

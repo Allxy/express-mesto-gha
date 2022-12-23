@@ -21,6 +21,6 @@ const userSchema = new Schema({
     type: Number,
     select: false,
   },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 export default model('user', userSchema);
