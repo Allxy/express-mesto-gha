@@ -1,6 +1,4 @@
-import { isValidObjectId } from 'mongoose';
 import UserRepository from '../repositories/UsersRepository.js';
-import BadRequestError from '../utils/errors/BadRequestError.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createUser(request, response, next) {
@@ -23,11 +21,7 @@ async function getAllUsers(request, response, next) {
 
 async function getUser(request, response, next) {
   try {
-    const userId = request.params.id;
-    if (!isValidObjectId(userId)) {
-      throw new BadRequestError('User id is not valid');
-    }
-    const user = await UserRepository.getOne(userId);
+    const user = await UserRepository.getOne(request.params.id);
     if (user === null) {
       throw new NotFoundError('User not found');
     } else {

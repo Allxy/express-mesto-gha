@@ -1,5 +1,3 @@
-import { isValidObjectId } from 'mongoose';
-
 export default class Repository {
   #model;
 
@@ -16,38 +14,17 @@ export default class Repository {
   }
 
   getOne(filter) {
-    if (isValidObjectId(filter)) {
-      return this.#model.findById(filter).exec();
-    }
-    if (typeof filter === 'object') {
-      return this.#model.findOne(filter).exec();
-    }
-    return null;
+    return this.#model.findById(filter).exec();
   }
 
   deleteOne(filter) {
-    if (isValidObjectId(filter)) {
-      return this.#model.findByIdAndDelete(filter).exec();
-    }
-    if (typeof filter === 'object') {
-      return this.#model.deleteOne(filter).exec();
-    }
-    return null;
+    return this.#model.findByIdAndDelete(filter).exec();
   }
 
   updateOne(filter, data) {
-    if (isValidObjectId(filter)) {
-      return this.#model.findByIdAndUpdate(filter, data, {
-        new: true,
-        runValidators: true,
-      }).exec();
-    }
-    if (typeof filter === 'object') {
-      return this.#model.updateOne(filter, data, {
-        new: true,
-        runValidators: true,
-      }).exec();
-    }
-    return null;
+    return this.#model.findByIdAndUpdate(filter, data, {
+      new: true,
+      runValidators: true,
+    }).exec();
   }
 }

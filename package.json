@@ -4,9 +4,10 @@
   "type": "module",
   "description": "Проект Mesto бэкенд",
   "main": "app.js",
+  "__comment": "Зачем дописывать имя файла, если нода берет его из main выше",
   "scripts": {
     "dev": "nodemon",
-    "start": "node --experimental-modules --es-module-specifier-resolution=node ."
+    "start": "node ."
   },
   "repository": {
     "type": "git",

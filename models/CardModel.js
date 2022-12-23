@@ -18,6 +18,7 @@ const cardSchema = new Schema({
   },
   likes: {
     type: [Types.ObjectId],
+    ref: 'user',
     default: [],
   },
 }, { timestamps: true, versionKey: false });
