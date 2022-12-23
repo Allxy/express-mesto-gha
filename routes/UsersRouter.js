@@ -1,10 +1,7 @@
 import { Router } from 'express';
 import UsersController from '../controllers/UsersController.js';
-import authMiddleware from '../middlewares/AuthMiddleware.js';
 
 const router = Router();
-
-router.use(authMiddleware);
 
 router.get('', UsersController.getAllUsers);
 router.get('/:id', UsersController.getUser);

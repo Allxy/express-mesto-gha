@@ -16,6 +16,11 @@ async function start() {
 
     const app = express();
     app.use(json());
+    app.use((req) => {
+      req.user = {
+        _id: '5d8b8592978f8bd833ca8133',
+      };
+    });
     app.use('/users', usersRouter);
     app.use('/cards', cardsRouter);
     app.use(httpErrorHandler);
