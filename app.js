@@ -6,7 +6,7 @@ import mongoErorHandler from './middlewares/MongoErrorHandler.js';
 import usersRouter from './routes/UsersRouter.js';
 import cardsRouter from './routes/CardsRouter.js';
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
