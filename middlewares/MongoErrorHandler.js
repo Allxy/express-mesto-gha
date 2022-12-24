@@ -6,11 +6,11 @@ import { BAD_REQUEST_ERR_CODE } from '../utils/constants.js';
 export default function mongoErorHandler(error, request, response, next) {
   if (error instanceof MongooseError) {
     if (error instanceof ValidationError) {
-      const { name, message } = error;
-      response.status(BAD_REQUEST_ERR_CODE).send({ name, message });
+      const { message } = error;
+      response.status(BAD_REQUEST_ERR_CODE).send({ message });
     } else if (error instanceof CastError) {
-      const { name, value, kind } = error;
-      response.status(BAD_REQUEST_ERR_CODE).send({ name, message: `Value '${value}' is not valid ${kind}` });
+      const { value, kind } = error;
+      response.status(BAD_REQUEST_ERR_CODE).send({ message: `Value '${value}' is not valid ${kind}` });
     } else {
       next(error);
     }
