@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
 import httpErrorHandler from './middlewares/HttpErrorHandler.js';
 import mongoErorHandler from './middlewares/MongoErrorHandler.js';
-import usersRouter from './routes/UsersRouter.js';
-import cardsRouter from './routes/CardsRouter.js';
+import router from './routes/index.js';
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,11 +21,7 @@ async function start() {
       };
       next();
     });
-    app.use('/users', usersRouter);
-    app.use('/cards', cardsRouter);
-    app.use('*', (request, response) => {
-      response.status(404).send({ message: "Endpoint doesn't exist" });
-    });
+    app.use('/', router);
     app.use(httpErrorHandler);
     app.use(mongoErorHandler);
     app.use(defaultErrorHandler);

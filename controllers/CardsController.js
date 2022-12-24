@@ -1,4 +1,5 @@
 import CardsRepository from '../repositories/CardsRepository.js';
+import { CARD_NOT_FOUND } from '../utils/errors/constants.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createCard(request, response, next) {
@@ -23,7 +24,7 @@ async function deleteCard(request, response, next) {
   try {
     const card = await CardsRepository.deleteOne(request.params.id);
     if (card === null) {
-      throw new NotFoundError('Card not found');
+      throw new NotFoundError(CARD_NOT_FOUND);
     }
     response.send(card);
   } catch (error) {
@@ -37,7 +38,7 @@ async function likeCard(request, response, next) {
       $addToSet: { likes: request.user._id },
     });
     if (card === null) {
-      throw new NotFoundError('Card not found');
+      throw new NotFoundError(CARD_NOT_FOUND);
     }
     response.send(card);
   } catch (error) {
@@ -51,7 +52,7 @@ async function dislikeCard(request, response, next) {
       $pull: { likes: request.user._id },
     });
     if (card === null) {
-      throw new NotFoundError('Card not found');
+      throw new NotFoundError(CARD_NOT_FOUND);
     }
     response.send(card);
   } catch (error) {

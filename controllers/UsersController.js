@@ -1,4 +1,5 @@
 import UserRepository from '../repositories/UsersRepository.js';
+import { USER_NOT_FOUND } from '../utils/errors/constants.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createUser(request, response, next) {
@@ -23,10 +24,9 @@ async function getUser(request, response, next) {
   try {
     const user = await UserRepository.getOne(request.params.id);
     if (user === null) {
-      throw new NotFoundError('User not found');
-    } else {
-      response.send(user);
+      throw new NotFoundError(USER_NOT_FOUND);
     }
+    response.send(user);
   } catch (error) {
     next(error);
   }
