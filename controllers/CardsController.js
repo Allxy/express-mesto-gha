@@ -13,7 +13,7 @@ async function createCard(request, response, next) {
 
 async function getAllCards(request, response, next) {
   try {
-    const cards = await CardsRepository.getMany().populate('likes');
+    const cards = await CardsRepository.getMany().populate('likes owner');
     response.send(cards);
   } catch (error) {
     next(error);
@@ -36,7 +36,7 @@ async function toggleLike(action, request, response, next) {
   try {
     const card = await CardsRepository.updateOne(request.params.id, {
       [action]: { likes: request.user._id },
-    }).populate('likes');
+    }).populate('likes owner');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
@@ -46,8 +46,13 @@ async function toggleLike(action, request, response, next) {
   }
 }
 
-const likeCard = toggleLike.bind(null, '$addToSet');
-const dislikeCard = toggleLike.bind(null, '$pull');
+function likeCard(request, response, next) {
+  return toggleLike('$addToSet', request, response, next);
+}
+
+function dislikeCard(request, response, next) {
+  return toggleLike('$pull', request, response, next);
+}
 
 export default {
   createCard,

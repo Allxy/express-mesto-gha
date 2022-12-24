@@ -33,11 +33,12 @@ async function getUser(request, response, next) {
 }
 
 async function updateUser(request, response, next) {
-  // Зачем тут проверять юзера, если это эндпоинт только для
-  // авторизованного пользователя, он априори существует, иначе мы бы не залогинились
   try {
     const { name, about } = request.body;
     const user = await UserRepository.updateOne(request.user._id, { name, about });
+    if (user === null) {
+      throw new NotFoundError(USER_NOT_FOUND);
+    }
     response.send(user);
   } catch (error) {
     next(error);
