@@ -1,5 +1,5 @@
-import { INTERNAL_SERVER_ERR_CODE } from './constants.js';
-import HttpError from './HttpError.js';
+import { INTERNAL_SERVER_ERR_CODE } from '../constants.js';
+import HttpError from './httpError.js';
 
 export default class InternalServerError extends HttpError {
   constructor(message) {

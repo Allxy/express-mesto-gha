@@ -6,3 +6,5 @@ export const USER_NOT_FOUND = 'User not found';
 export const CARD_NOT_FOUND = 'Card not found';
 export const PAGE_NOT_FOUND = "Endpoint doesn't exists";
 export const INTERNAL_ERROR = 'Something went wrong';
+
+export const CREATED_CODE = 201;

@@ -1,11 +1,11 @@
-import CardsRepository from '../repositories/CardsRepository.js';
-import { CARD_NOT_FOUND } from '../utils/errors/constants.js';
-import NotFoundError from '../utils/errors/NotFoundError.js';
+import CardsRepository from '../repositories/cardsRepository.js';
+import { CARD_NOT_FOUND, CREATED_CODE } from '../utils/constants.js';
+import NotFoundError from '../utils/errors/notFoundError.js';
 
 async function createCard(request, response, next) {
   try {
     const card = await CardsRepository.create({ ...request.body, owner: request.user._id });
-    response.status(201).send(card);
+    response.status(CREATED_CODE).send(card);
   } catch (error) {
     next(error);
   }
@@ -13,7 +13,7 @@ async function createCard(request, response, next) {
 
 async function getAllCards(request, response, next) {
   try {
-    const cards = await CardsRepository.getMany();
+    const cards = await CardsRepository.getMany().populate('likes');
     response.send(cards);
   } catch (error) {
     next(error);
@@ -32,11 +32,11 @@ async function deleteCard(request, response, next) {
   }
 }
 
-async function likeCard(request, response, next) {
+async function toggleLike(action, request, response, next) {
   try {
     const card = await CardsRepository.updateOne(request.params.id, {
-      $addToSet: { likes: request.user._id },
-    });
+      [action]: { likes: request.user._id },
+    }).populate('likes');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
@@ -46,19 +46,8 @@ async function likeCard(request, response, next) {
   }
 }
 
-async function dislikeCard(request, response, next) {
-  try {
-    const card = await CardsRepository.updateOne(request.params.id, {
-      $pull: { likes: request.user._id },
-    });
-    if (card === null) {
-      throw new NotFoundError(CARD_NOT_FOUND);
-    }
-    response.send(card);
-  } catch (error) {
-    next(error);
-  }
-}
+const likeCard = toggleLike.bind(null, '$addToSet');
+const dislikeCard = toggleLike.bind(null, '$pull');
 
 export default {
   createCard,

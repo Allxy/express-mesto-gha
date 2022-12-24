@@ -1,5 +1,5 @@
-import CardModel from '../models/CardModel.js';
-import Repository from './Repository.js';
+import CardModel from '../models/cardModel.js';
+import Repository from './repository.js';
 
 class CardsRepository extends Repository {
   constructor() {

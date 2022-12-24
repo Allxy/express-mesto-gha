@@ -1,7 +1,7 @@
 import CastError from 'mongoose/lib/error/cast.js';
 import MongooseError from 'mongoose/lib/error/mongooseError.js';
 import ValidationError from 'mongoose/lib/error/validation.js';
-import { BAD_REQUEST_ERR_CODE } from '../utils/errors/constants.js';
+import { BAD_REQUEST_ERR_CODE } from '../utils/constants.js';
 
 export default function mongoErorHandler(error, request, response, next) {
   if (error instanceof MongooseError) {

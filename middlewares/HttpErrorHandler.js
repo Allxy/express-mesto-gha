@@ -1,4 +1,4 @@
-import HttpError from '../utils/errors/HttpError.js';
+import HttpError from '../utils/errors/httpError.js';
 
 export default function httpErrorHandler(error, request, response, next) {
   if (error instanceof HttpError) {

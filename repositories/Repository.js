@@ -10,21 +10,21 @@ export default class Repository {
   }
 
   getMany(filter = {}) {
-    return this.#model.find(filter).exec();
+    return this.#model.find(filter);
   }
 
   getOne(filter) {
-    return this.#model.findById(filter).exec();
+    return this.#model.findById(filter);
   }
 
   deleteOne(filter) {
-    return this.#model.findByIdAndDelete(filter).exec();
+    return this.#model.findByIdAndDelete(filter);
   }
 
   updateOne(filter, data) {
     return this.#model.findByIdAndUpdate(filter, data, {
       new: true,
       runValidators: true,
-    }).exec();
+    });
   }
 }

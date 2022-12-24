@@ -1,8 +1,9 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
-import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
-import httpErrorHandler from './middlewares/HttpErrorHandler.js';
-import mongoErorHandler from './middlewares/MongoErrorHandler.js';
+import defaultErrorHandler from './middlewares/defaultErrorHandler.js';
+import errorLogger from './middlewares/errorLogger.js';
+import httpErrorHandler from './middlewares/httpErrorHandler.js';
+import mongoErorHandler from './middlewares/mongoErrorHandler.js';
 import router from './routes/index.js';
 
 const PORT = process.env.PORT || 3000;
@@ -17,11 +18,12 @@ async function start() {
     app.use(json());
     app.use((req, res, next) => {
       req.user = {
-        _id: '5d8b8592978f8bd833ca8133',
+        _id: '63a4efe910fccf33df41567b',
       };
       next();
     });
     app.use('/', router);
+    app.use(errorLogger);
     app.use(httpErrorHandler);
     app.use(mongoErorHandler);
     app.use(defaultErrorHandler);

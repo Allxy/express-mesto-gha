@@ -1,5 +1,5 @@
-import { NOT_FOUND_ERR_CODE } from './constants.js';
-import HttpError from './HttpError.js';
+import { NOT_FOUND_ERR_CODE } from '../constants.js';
+import HttpError from './httpError.js';
 
 export default class NotFoundError extends HttpError {
   constructor(message) {
