@@ -1,4 +1,4 @@
-import UserRepository from '../repositories/UusersRepository.js';
+import UserRepository from '../repositories/UsersRepository.js';
 import { CREATED_CODE, USER_NOT_FOUND } from '../utils/constants.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
