@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
-import errorLogger from './middlewares/ErrorLogger.js';
+import errorLog from './middlewares/ErrorLog.js';
 import httpErrorHandler from './middlewares/HttpErrorHandler.js';
 import mongoErorHandler from './middlewares/MongoErrorHandler.js';
 import router from './routes/index.js';
@@ -23,7 +23,7 @@ async function start() {
       next();
     });
     app.use('/', router);
-    app.use(errorLogger);
+    app.use(errorLog);
     app.use(httpErrorHandler);
     app.use(mongoErorHandler);
     app.use(defaultErrorHandler);
