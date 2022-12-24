@@ -1,6 +1,6 @@
-import UserRepository from '../repositories/usersRepository.js';
+import UserRepository from '../repositories/UusersRepository.js';
 import { CREATED_CODE, USER_NOT_FOUND } from '../utils/constants.js';
-import NotFoundError from '../utils/errors/notFoundError.js';
+import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createUser(request, response, next) {
   try {

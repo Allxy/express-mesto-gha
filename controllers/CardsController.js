@@ -1,6 +1,6 @@
-import CardsRepository from '../repositories/cardsRepository.js';
+import CardsRepository from '../repositories/CardsRepository.js';
 import { CARD_NOT_FOUND, CREATED_CODE } from '../utils/constants.js';
-import NotFoundError from '../utils/errors/notFoundError.js';
+import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createCard(request, response, next) {
   try {

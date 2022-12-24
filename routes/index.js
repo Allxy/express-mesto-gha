@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { NOT_FOUND_ERR_CODE, PAGE_NOT_FOUND } from '../utils/constants.js';
-import cardsRouter from './cardsRouter.js';
-import userRouter from './usersRouter.js';
+import cardsRouter from './CardsRouter.js';
+import userRouter from './UsersRouter.js';
 
 const router = Router();
 

@@ -1,9 +1,9 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
-import defaultErrorHandler from './middlewares/defaultErrorHandler.js';
-import errorLogger from './middlewares/errorLogger.js';
-import httpErrorHandler from './middlewares/httpErrorHandler.js';
-import mongoErorHandler from './middlewares/mongoErrorHandler.js';
+import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
+import errorLogger from './middlewares/ErrorLogger.js';
+import httpErrorHandler from './middlewares/HttpErrorHandler.js';
+import mongoErorHandler from './middlewares/MongoErrorHandler.js';
 import router from './routes/index.js';
 
 const PORT = process.env.PORT || 3000;
