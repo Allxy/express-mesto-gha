@@ -20,7 +20,7 @@ router.patch('/me', celebrate({
 }), UsersController.updateInfo);
 router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().uri(),
+    avatar: Joi.string().uri().regex(/^https?:\/\//i),
   }),
 }), UsersController.updateAvatar);
 router.get('/:id', objectIDvalidator, UsersController.getUser);

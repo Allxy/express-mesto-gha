@@ -37,7 +37,7 @@ async function getMe(request, response, next) {
 
 async function updateUser(request, response, next) {
   try {
-    const user = await UserModel.findByIdAndUpdate(request.user._id, request.body);
+    const user = await UserModel.findByIdAndUpdate(request.user._id, request.body, { new: true });
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }

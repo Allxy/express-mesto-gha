@@ -43,7 +43,7 @@ async function toggleLike(action, request, response, next) {
   try {
     const card = await CardModel.findByIdAndUpdate(request.params.id, {
       [action]: { likes: request.user._id },
-    }).populate('owner likes');
+    }, { new: true }).populate('owner likes');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
