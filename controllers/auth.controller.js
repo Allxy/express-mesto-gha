@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import UserModel from '../models/UserModel.js';
+import UserModel from '../models/user.model.js';
 import { AUTH_ERROR, CREATED_CODE, USER_EXISTS } from '../utils/constants.js';
 import { ConflictError, UnauthorizedError } from '../utils/errors/index.js';
 

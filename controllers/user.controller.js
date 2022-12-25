@@ -1,4 +1,4 @@
-import UserModel from '../models/UserModel.js';
+import UserModel from '../models/user.model.js';
 import { USER_NOT_FOUND } from '../utils/constants.js';
 import { NotFoundError } from '../utils/errors/index.js';
 

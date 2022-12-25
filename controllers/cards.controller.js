@@ -1,4 +1,4 @@
-import CardModel from '../models/CardModel.js';
+import CardModel from '../models/card.model.js';
 import { CARD_NOT_FOUND, CREATED_CODE, NO_RIGHTS } from '../utils/constants.js';
 import { ForbiddenError, NotFoundError } from '../utils/errors/index.js';
 

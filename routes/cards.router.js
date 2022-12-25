@@ -1,6 +1,6 @@
 import { celebrate, Joi } from 'celebrate';
 import { Router } from 'express';
-import CardsController from '../controllers/CardsController.js';
+import CardsController from '../controllers/cards.controller.js';
 
 const router = Router();
 

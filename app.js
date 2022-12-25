@@ -1,12 +1,11 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { errors } from 'celebrate';
-import errorLog from './middlewares/ErrorLog.js';
-import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
-import httpErrorHandler from './middlewares/HttpErrorHandler.js';
-import mongoErrorHandler from './middlewares/MongoErrorHandler.js';
-import authErrorHandler from './middlewares/AuthErrorHandler.js';
+import { errors as celebrateErrorHandler } from 'celebrate';
+import errorLog from './middlewares/auth.middleware.js';
+import {
+  defaultErrorHandler, httpErrorHandler, authErrorHandler, mongoErrorHandler,
+} from './errors/index.js';
 import router from './routes/index.js';
 
 dotenv.config();
@@ -22,7 +21,7 @@ async function start() {
     app.use(json());
     app.use('/', router);
     app.use(errorLog);
-    app.use(errors());
+    app.use(celebrateErrorHandler());
     app.use(authErrorHandler);
     app.use(httpErrorHandler);
     app.use(mongoErrorHandler);
