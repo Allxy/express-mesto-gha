@@ -17,6 +17,10 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().uri(),
   }),
 }), UsersController.updateAvatar);
-router.get('/:id', UsersController.getUser);
+router.get('/:id', celebrate({
+  params: {
+    id: Joi.string().uuid(),
+  },
+}), UsersController.getUser);
 
 export default router;
