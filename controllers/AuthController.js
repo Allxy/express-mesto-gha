@@ -10,7 +10,7 @@ async function signup(request, response, next) {
     let { email, password } = request.body;
     email = email.toLowerCase();
 
-    const checkUser = await UserModel.fundOne({ email });
+    const checkUser = await UserModel.findOne({ email });
     if (checkUser !== null) {
       throw new ConflictError(USER_EXISTS);
     }
