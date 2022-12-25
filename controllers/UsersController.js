@@ -23,6 +23,18 @@ async function getUser(request, response, next) {
   }
 }
 
+async function getMe(request, response, next) {
+  try {
+    const user = await UserRepository.getById(request.user._id);
+    if (user === null) {
+      throw new NotFoundError(USER_NOT_FOUND);
+    }
+    response.send(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function updateUser(request, response, next) {
   try {
     const user = await UserRepository.updateById(request.user._id, request.body);
@@ -52,4 +64,5 @@ export default {
   getUser,
   updateInfo,
   updateAvatar,
+  getMe,
 };

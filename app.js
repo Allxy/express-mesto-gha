@@ -19,12 +19,6 @@ async function start() {
 
     const app = express();
     app.use(json());
-    app.use((req, res, next) => {
-      req.user = {
-        _id: '63a5cc0298603a2ba82d7952',
-      };
-      next();
-    });
     app.use('/', router);
     app.use(errorLog);
     app.use(authErrorHandler);
