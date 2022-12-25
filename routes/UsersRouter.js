@@ -4,6 +4,12 @@ import UsersController from '../controllers/UsersController.js';
 
 const router = Router();
 
+const objectIDvalidator = celebrate({
+  params: {
+    id: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+  },
+});
+
 router.get('', UsersController.getAllUsers);
 router.get('/me', UsersController.getMe);
 router.patch('/me', celebrate({
@@ -17,10 +23,6 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().uri(),
   }),
 }), UsersController.updateAvatar);
-router.get('/:id', celebrate({
-  params: {
-    id: Joi.string().uuid(),
-  },
-}), UsersController.getUser);
+router.get('/:id', objectIDvalidator, UsersController.getUser);
 
 export default router;
