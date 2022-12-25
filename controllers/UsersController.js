@@ -34,8 +34,7 @@ async function getUser(request, response, next) {
 
 async function updateUser(request, response, next) {
   try {
-    const { name, about } = request.body;
-    const user = await UserRepository.updateOne(request.user._id, { name, about });
+    const user = await UserRepository.updateOne(request.user._id, request.body);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }
@@ -45,20 +44,22 @@ async function updateUser(request, response, next) {
   }
 }
 
-async function updateAvatar(request, response, next) {
-  try {
-    const { avatar } = request.body;
-    const user = await UserRepository.updateOne(request.user._id, { avatar });
-    response.send(user);
-  } catch (error) {
-    next(error);
-  }
+function updateAvatar(request, response, next) {
+  const { avatar } = request.body;
+  request.body = { avatar };
+  return updateUser(request, response, next);
+}
+
+function updateInfo(request, response, next) {
+  const { name, about } = request.body;
+  request.body = { name, about };
+  return updateUser(request, response, next);
 }
 
 export default {
   createUser,
   getAllUsers,
   getUser,
-  updateUser,
+  updateInfo,
   updateAvatar,
 };

@@ -6,7 +6,7 @@ const router = Router();
 router.get('', UsersController.getAllUsers);
 router.get('/:id', UsersController.getUser);
 router.post('', UsersController.createUser);
-router.patch('/me', UsersController.updateUser);
+router.patch('/me', UsersController.updateInfo);
 router.patch('/me/avatar', UsersController.updateAvatar);
 
 export default router;
