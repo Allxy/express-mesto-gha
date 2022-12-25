@@ -1,6 +1,6 @@
 import UserModel from '../models/UserModel.js';
 import { USER_NOT_FOUND } from '../utils/constants.js';
-import NotFoundError from '../utils/errors/NotFoundError.js';
+import { NotFoundError } from '../utils/errors/index.js';
 
 async function getAllUsers(request, response, next) {
   try {

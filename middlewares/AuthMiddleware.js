@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { AUTH_REQUIRED, BAD_TOKEN_TYPE } from '../utils/constants.js';
-import UnauthorizedError from '../utils/errors/UnauthorizedError.js';
+import { UnauthorizedError } from '../utils/errors/index.js';
 
 export default function auth(request, resource, next) {
   try {

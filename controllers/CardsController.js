@@ -1,7 +1,6 @@
 import CardModel from '../models/CardModel.js';
 import { CARD_NOT_FOUND, CREATED_CODE, NO_RIGHTS } from '../utils/constants.js';
-import ForbiddenError from '../utils/errors/ForbiddenError.js';
-import NotFoundError from '../utils/errors/NotFoundError.js';
+import { ForbiddenError, NotFoundError } from '../utils/errors/index.js';
 
 async function createCard(request, response, next) {
   try {

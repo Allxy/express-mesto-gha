@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/UserModel.js';
 import { AUTH_ERROR, CREATED_CODE, USER_EXISTS } from '../utils/constants.js';
-import ConflictError from '../utils/errors/ConflictError.js';
-import UnauthorizedError from '../utils/errors/UnauthorizedError.js';
+import { ConflictError, UnauthorizedError } from '../utils/errors/index.js';
 
 async function signup(request, response, next) {
   try {

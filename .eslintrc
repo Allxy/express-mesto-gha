@@ -21,6 +21,13 @@
           "_id"
         ]
       }
+    ],
+    "no-restricted-exports": [
+      "error",
+      {
+        "restrictedNamedExports": [
+        ],
+      }
     ]
   }
 }
