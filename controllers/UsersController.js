@@ -1,10 +1,10 @@
-import UserRepository from '../repositories/UsersRepository.js';
+import UserModel from '../models/UserModel.js';
 import { USER_NOT_FOUND } from '../utils/constants.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function getAllUsers(request, response, next) {
   try {
-    const users = await UserRepository.getMany();
+    const users = await UserModel.find({});
     response.send(users);
   } catch (error) {
     next(error);
@@ -13,7 +13,7 @@ async function getAllUsers(request, response, next) {
 
 async function getUser(request, response, next) {
   try {
-    const user = await UserRepository.getById(request.params.id);
+    const user = await UserModel.findById(request.params.id);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }
@@ -25,7 +25,7 @@ async function getUser(request, response, next) {
 
 async function getMe(request, response, next) {
   try {
-    const user = await UserRepository.getById(request.user._id);
+    const user = await UserModel.findById(request.user._id);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }
@@ -37,7 +37,7 @@ async function getMe(request, response, next) {
 
 async function updateUser(request, response, next) {
   try {
-    const user = await UserRepository.updateById(request.user._id, request.body);
+    const user = await UserModel.findByIdAndUpdate(request.user._id, request.body);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }

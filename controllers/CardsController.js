@@ -1,11 +1,13 @@
-import CardsRepository from '../repositories/CardsRepository.js';
+import CardModel from '../models/CardModel.js';
 import { CARD_NOT_FOUND, CREATED_CODE, NO_RIGHTS } from '../utils/constants.js';
 import ForbiddenError from '../utils/errors/ForbiddenError.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
 
 async function createCard(request, response, next) {
   try {
-    const card = await CardsRepository.create({ ...request.body, owner: request.user._id });
+    let card = new CardModel({ ...request.body, owner: request.user._id });
+    await card.save();
+    card = await card.populate('owner likes');
     response.status(CREATED_CODE).send(card);
   } catch (error) {
     next(error);
@@ -14,7 +16,7 @@ async function createCard(request, response, next) {
 
 async function getAllCards(request, response, next) {
   try {
-    const cards = await CardsRepository.getMany();
+    const cards = await CardModel.find({}).populate('owner likes');
     response.send(cards);
   } catch (error) {
     next(error);
@@ -23,14 +25,14 @@ async function getAllCards(request, response, next) {
 
 async function deleteCard(request, response, next) {
   try {
-    const card = await CardsRepository.getById(request.params.id);
+    const card = await CardModel.findById(request.params.id).populate('owner likes');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
     if (card.owner.id !== request.user._id) {
       throw new ForbiddenError(NO_RIGHTS);
     }
-    await CardsRepository.deleteById(request.params.id);
+    await card.delete();
     response.send(card);
   } catch (error) {
     next(error);
@@ -39,9 +41,9 @@ async function deleteCard(request, response, next) {
 
 async function toggleLike(action, request, response, next) {
   try {
-    const card = await CardsRepository.updateById(request.params.id, {
+    const card = await CardModel.findByIdAndUpdate(request.params.id, {
       [action]: { likes: request.user._id },
-    });
+    }).populate('owner likes');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }

@@ -9,7 +9,6 @@ const userSchema = new Schema({
   },
   about: {
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 30,
     about: 'Исследователь',
@@ -17,6 +16,12 @@ const userSchema = new Schema({
   avatar: {
     type: String,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+    validate: {
+      validator(v) {
+        return /^(https?:\/\/)(www.)?[^\s]+(#?)$/i.test(v);
+      },
+      message: (props) => `${props.value} is not a valid url`,
+    },
   },
   email: {
     type: String,
@@ -24,7 +29,7 @@ const userSchema = new Schema({
     required: true,
     validate: {
       validator(v) {
-        return /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(v);
+        return /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/i.test(v);
       },
       message: (props) => `${props.value} is not a valid email`,
     },
@@ -38,13 +43,6 @@ const userSchema = new Schema({
 }, {
   timestamps: true,
   versionKey: false,
-  statics: {
-
-    findUserByCredentials() {
-      return null;
-    },
-
-  },
 });
 
 export default model('user', userSchema);

@@ -1,3 +1,4 @@
+import { celebrate, Joi } from 'celebrate';
 import { Router } from 'express';
 import UsersController from '../controllers/UsersController.js';
 
@@ -5,8 +6,17 @@ const router = Router();
 
 router.get('', UsersController.getAllUsers);
 router.get('/me', UsersController.getMe);
-router.patch('/me', UsersController.updateInfo);
-router.patch('/me/avatar', UsersController.updateAvatar);
+router.patch('/me', celebrate({
+  body: Joi.object().keys({
+    about: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30),
+  }),
+}), UsersController.updateInfo);
+router.patch('/me/avatar', celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().uri(),
+  }),
+}), UsersController.updateAvatar);
 router.get('/:id', UsersController.getUser);
 
 export default router;
