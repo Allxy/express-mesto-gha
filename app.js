@@ -1,11 +1,14 @@
 import express, { json } from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import defaultErrorHandler from './middlewares/DefaultErrorHandler.js';
 import errorLog from './middlewares/ErrorLog.js';
 import httpErrorHandler from './middlewares/HttpErrorHandler.js';
-import mongoErorHandler from './middlewares/MongoErrorHandler.js';
+import mongoErrorHandler from './middlewares/MongoErrorHandler.js';
+import authErrorHandler from './middlewares/AuthErrorHandler.js';
 import router from './routes/index.js';
 
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 async function start() {
@@ -24,8 +27,9 @@ async function start() {
     });
     app.use('/', router);
     app.use(errorLog);
+    app.use(authErrorHandler);
     app.use(httpErrorHandler);
-    app.use(mongoErorHandler);
+    app.use(mongoErrorHandler);
     app.use(defaultErrorHandler);
 
     app.listen(PORT, () => {

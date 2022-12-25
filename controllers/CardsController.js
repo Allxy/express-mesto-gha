@@ -13,7 +13,7 @@ async function createCard(request, response, next) {
 
 async function getAllCards(request, response, next) {
   try {
-    const cards = await CardsRepository.getMany().populate('likes owner');
+    const cards = await CardsRepository.getMany();
     response.send(cards);
   } catch (error) {
     next(error);
@@ -22,7 +22,7 @@ async function getAllCards(request, response, next) {
 
 async function deleteCard(request, response, next) {
   try {
-    const card = await CardsRepository.deleteOne(request.params.id);
+    const card = await CardsRepository.deleteById(request.params.id);
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
@@ -34,9 +34,9 @@ async function deleteCard(request, response, next) {
 
 async function toggleLike(action, request, response, next) {
   try {
-    const card = await CardsRepository.updateOne(request.params.id, {
+    const card = await CardsRepository.updateById(request.params.id, {
       [action]: { likes: request.user._id },
-    }).populate('likes owner');
+    });
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }

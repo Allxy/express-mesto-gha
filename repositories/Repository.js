@@ -5,24 +5,30 @@ export default class Repository {
     this.#model = model;
   }
 
-  create(data) {
-    return this.#model.create(data);
+  async create(data) {
+    const item = new this.#model(data);
+    await item.save();
+    return item;
+  }
+
+  getOne(filter = {}) {
+    return this.#model.findOne(filter);
   }
 
   getMany(filter = {}) {
     return this.#model.find(filter);
   }
 
-  getOne(filter) {
-    return this.#model.findById(filter);
+  getById(id) {
+    return this.#model.findById(id);
   }
 
-  deleteOne(filter) {
-    return this.#model.findByIdAndDelete(filter);
+  deleteById(id) {
+    return this.#model.findByIdAndDelete(id);
   }
 
-  updateOne(filter, data) {
-    return this.#model.findByIdAndUpdate(filter, data, {
+  updateById(id, data) {
+    return this.#model.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });

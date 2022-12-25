@@ -1,15 +1,6 @@
 import UserRepository from '../repositories/UsersRepository.js';
-import { CREATED_CODE, USER_NOT_FOUND } from '../utils/constants.js';
+import { USER_NOT_FOUND } from '../utils/constants.js';
 import NotFoundError from '../utils/errors/NotFoundError.js';
-
-async function createUser(request, response, next) {
-  try {
-    const user = await UserRepository.create(request.body);
-    response.status(CREATED_CODE).send(user);
-  } catch (error) {
-    next(error);
-  }
-}
 
 async function getAllUsers(request, response, next) {
   try {
@@ -22,7 +13,7 @@ async function getAllUsers(request, response, next) {
 
 async function getUser(request, response, next) {
   try {
-    const user = await UserRepository.getOne(request.params.id);
+    const user = await UserRepository.getById(request.params.id);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }
@@ -34,7 +25,7 @@ async function getUser(request, response, next) {
 
 async function updateUser(request, response, next) {
   try {
-    const user = await UserRepository.updateOne(request.user._id, request.body);
+    const user = await UserRepository.updateById(request.user._id, request.body);
     if (user === null) {
       throw new NotFoundError(USER_NOT_FOUND);
     }
@@ -57,7 +48,6 @@ function updateInfo(request, response, next) {
 }
 
 export default {
-  createUser,
   getAllUsers,
   getUser,
   updateInfo,
