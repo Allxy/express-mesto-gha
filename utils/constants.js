@@ -1,3 +1,4 @@
+export const CONFLICT_ERR_CODE = 409;
 export const NOT_FOUND_ERR_CODE = 404;
 export const FORBIDDEN_ERR_CODE = 403;
 export const UNAUTHORIZED_ERR_CODE = 401;
@@ -13,5 +14,6 @@ export const AUTH_REQUIRED = 'Authorization required';
 export const BAD_TOKEN = 'Bad token';
 export const BAD_TOKEN_TYPE = 'Bad token type';
 export const INTERNAL_ERROR = 'Something went wrong';
+export const NO_RIGHTS = 'You have no rights';
 
 export const CREATED_CODE = 201;
