@@ -10,7 +10,8 @@ import {
 } from './errors/index.js';
 import router from './routes/index.js';
 
-dotenv.config();
+dotenv.config({ path: '.env.dev' });
+dotenv.config({ override: true });
 const PORT = process.env.PORT || 3000;
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
