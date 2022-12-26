@@ -2,7 +2,6 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { errors as celebrateErrorHandler } from 'celebrate';
-import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import cors from 'cors';
 import {
@@ -10,6 +9,7 @@ import {
 } from './errors/index.js';
 import router from './routes/index.js';
 import requestLogger from './middlewares/reqlog.middleware.js';
+import limiter from './middlewares/limiter.middleware.js';
 import logger from './utils/logger.js';
 
 dotenv.config();
@@ -19,13 +19,6 @@ if (!process.env.JWT_SECRET) {
   process.env.JWT_SECRET = 'devjwtmesto';
 }
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
 async function start() {
   try {
     mongoose.set('strictQuery', false);
@@ -33,11 +26,11 @@ async function start() {
     logger.info('Success connection to database.');
 
     const app = express();
+    app.use(requestLogger);
     app.use(limiter);
     app.use(helmet());
     app.use(json());
     app.use(cors());
-    app.use(requestLogger);
     app.use('/', router);
     app.use(errorLog);
     app.use(celebrateErrorHandler());
