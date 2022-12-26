@@ -2,6 +2,8 @@ import express, { json } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { errors as celebrateErrorHandler } from 'celebrate';
+import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
 import errorLog from './middlewares/auth.middleware.js';
 import {
   defaultErrorHandler, httpErrorHandler, authErrorHandler, mongoErrorHandler,
@@ -10,6 +12,12 @@ import router from './routes/index.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 async function start() {
   try {
@@ -18,6 +26,8 @@ async function start() {
     console.info('Success connection to database.');
 
     const app = express();
+    app.use(limiter);
+    app.use(helmet());
     app.use(json());
     app.use('/', router);
     app.use(errorLog);

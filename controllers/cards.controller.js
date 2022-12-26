@@ -28,6 +28,9 @@ async function deleteCard(request, response, next) {
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
+    // card.owner._id - объект, card.owner.id - string
+    // https://mongoosejs.com/docs/api/document.html#document_Document-id
+    // Изучите, пожалуйста, документацию
     if (card.owner.id !== request.user._id) {
       throw new ForbiddenError(NO_RIGHTS);
     }
@@ -42,7 +45,10 @@ async function toggleLike(action, request, response, next) {
   try {
     const card = await CardModel.findByIdAndUpdate(request.params.id, {
       [action]: { likes: request.user._id },
-    }, { new: true }).populate('owner likes');
+    }, {
+      new: true,
+      runValidators: true,
+    }).populate('owner likes');
     if (card === null) {
       throw new NotFoundError(CARD_NOT_FOUND);
     }
